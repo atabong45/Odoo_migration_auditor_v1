@@ -1,0 +1,63 @@
+# Fichier .gitignore global pour le projet Odoo Migration Auditor
+
+# --- Section Frontend (Node.js / Vite / Next.js) ---
+# Fichiers de log
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Dépendances
+frontend/node_modules/
+
+# Fichiers de build et de cache
+frontend/dist/
+frontend/.next/
+frontend/out/
+frontend/.vercel/
+
+# Fichiers de configuration locaux
+.env.local
+.env.*.local
+*.tsbuildinfo
+
+# Fichiers générés par l'OS
+.DS_Store
+Thumbs.db
+
+
+# --- Section Backend (Python / Django / Conda) ---
+# Environnements virtuels
+backend/venv/
+backend/env/
+.conda/
+
+# Fichiers de cache Python
+backend/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Base de données SQLite (ne jamais la versionner !)
+backend/db.sqlite3
+
+# Fichiers de configuration IDE
+.vscode/
+.idea/
+
+# Fichiers de couverture de tests
+.coverage
+.coverage.*
+htmlcov/
+
+# Fichiers de build Python
+build/
+dist/
+*.egg-info/
+
+
+# --- Section Globale ---
+# Fichiers de configuration d'OS génériques
+*~
+*.swp
