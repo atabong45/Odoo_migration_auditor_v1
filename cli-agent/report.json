@@ -1,0 +1,31 @@
+{
+    "issues": [
+        {
+            "issue_code": "PY001",
+            "severity": "MAJOR",
+            "module_name": "my_cool_module",
+            "file_path": "my_cool_module/models/sale_order.py",
+            "line_number": 12,
+            "description": "Usage of deprecated @api.one decorator. It should be replaced with a loop over 'self'.",
+            "code_snippet": "@api.one"
+        },
+        {
+            "issue_code": "PY002",
+            "severity": "CRITICAL",
+            "module_name": "my_cool_module",
+            "file_path": "my_cool_module/models/sale_order.py",
+            "line_number": 20,
+            "description": "Direct SQL query detected. This is a major risk for migrations as database schema can change. Use ORM methods instead.",
+            "code_snippet": "self.env.cr.execute('SELECT * FROM sale_order')"
+        },
+        {
+            "issue_code": "XML001",
+            "severity": "MINOR",
+            "module_name": "my_cool_module",
+            "file_path": "my_cool_module/views/sale_views.xml",
+            "line_number": 9,
+            "description": "The attribute 'track_visibility' is deprecated. It should be replaced by the 'tracking' attribute on the model field definition in Python.",
+            "code_snippet": "<field name=\"my_custom_field\" track_visibility=\"onchange\"/>"
+        }
+    ]
+}

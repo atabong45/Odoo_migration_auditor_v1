@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
 from .models import Project, AnalysisRun
 from .serializers import ProjectSerializer, AnalysisRunDetailSerializer,  AnalysisRunCreateSerializer
-from .permissions import IsProjectOwner, IsAnalysisOwner
+from .permissions import IsProjectOwner, IsAnalysisOwner, HasValidAPIKey
 
 class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
@@ -86,17 +86,18 @@ class AnalysisRunCreateView(generics.CreateAPIView):
     """
     queryset = AnalysisRun.objects.all()
     serializer_class = AnalysisRunCreateSerializer
-    permission_classes = [IsAuthenticated] # Seul un utilisateur authentifié peut soumettre une analyse
+    permission_classes = [HasValidAPIKey]
 
     def perform_create(self, serializer):
         """
-        Cette méthode est appelée juste avant de sauvegarder le nouvel objet.
-        On s'assure que le projet auquel l'analyse est liée appartient bien
-        à l'utilisateur qui fait la requête. C'est une mesure de sécurité cruciale.
+        Cette méthode est appelée juste avant de sauvegarder.
+        Le projet est récupéré via la clé d'API grâce à notre permission
+        et est disponible dans `self.request.project`.
+        On le passe directement au serializer lors de la sauvegarde.
         """
-        project = serializer.validated_data['project']
-        if project.owner != self.request.user:
-            raise PermissionDenied("Vous n'êtes pas autorisé à ajouter une analyse à ce projet.")
+        # La permission HasValidAPIKey a déjà validé la clé et stocké le projet ici.
+        project = self.request.project
         
-        # Si la vérification est OK, on procède à la sauvegarde normale.
-        serializer.save()
+        # On passe le projet en argument additionnel à la méthode save().
+        # Le serializer l'ajoutera à validated_data avant d'appeler sa méthode create().
+        serializer.save(project=project)

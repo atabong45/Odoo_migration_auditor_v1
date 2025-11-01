@@ -56,7 +56,7 @@ class AnalysisRunCreateSerializer(serializers.ModelSerializer):
         model = AnalysisRun
         # On ne demande que le project_id et la liste des issues à l'agent.
         # Le statut et les dates seront gérés automatiquement.
-        fields = ['project', 'issues']
+        fields = [ 'issues']
 
     def create(self, validated_data):
         """

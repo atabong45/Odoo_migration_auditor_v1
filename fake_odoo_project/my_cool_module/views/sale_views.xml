@@ -1,0 +1,13 @@
+<!-- fake_odoo_project/my_cool_module/views/sale_views.xml -->
+<odoo>
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <!-- This is the deprecated attribute we want to find -->
+                <field name="my_custom_field" track_visibility="onchange"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
