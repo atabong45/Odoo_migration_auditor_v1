@@ -21,6 +21,7 @@ class AnalysisRun(models.Model):
         FAILED = 'FAILED', 'Failed'
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='analysis_runs')
     status = models.CharField(max_length=10, choices=StatusChoices.choices, default=StatusChoices.PENDING)
+    effort_score = models.FloatField(default=0.0, help_text="Score d'effort calculé basé sur les issues trouvées.")
     created_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(null=True, blank=True)
 
@@ -50,6 +51,7 @@ class Issue(models.Model):
     line_number = models.PositiveIntegerField(null=True, blank=True)
     description = models.TextField()
     code_snippet = models.TextField(blank=True)
-
+    issue_code = models.CharField(max_length=20, blank=True, null=True, help_text="Code unique identifiant le type de problème")
+    
     def __str__(self):
         return f"{self.severity} in {self.file_path} (L{self.line_number})"

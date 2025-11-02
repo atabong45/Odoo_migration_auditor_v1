@@ -8,7 +8,7 @@ from .models import Project, AnalysisRun, Issue
 class AnalysisRunListSerializer(serializers.ModelSerializer):
     class Meta:
         model = AnalysisRun
-        fields = ['id', 'status', 'created_at']
+        fields = ['id', 'status', 'created_at', 'effort_score']
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -24,7 +24,7 @@ class IssueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Issue
         fields = [
-            'id', 'severity', 'module_name', 'file_path', 
+            'id', 'issue_code', 'severity', 'module_name', 'file_path', 
             'line_number', 'description', 'code_snippet'
         ]
 
@@ -40,7 +40,7 @@ class AnalysisRunDetailSerializer(serializers.ModelSerializer):
         model = AnalysisRun
         fields = [
             'id', 'project', 'status', 'created_at', 
-            'completed_at', 'issues' 
+            'completed_at','effort_score', 'issues' 
         ]
 
 

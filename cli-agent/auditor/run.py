@@ -114,6 +114,7 @@ def start_audit(path: str, api_key: str, from_version: float, to_version: float,
     }
     
     if output_file:
+        api_client.submit_report(report_data, api_key)
         print(f"\nSaving report to {output_file}...")
         try:
             with open(output_file, 'w', encoding='utf-8') as f:

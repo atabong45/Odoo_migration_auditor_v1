@@ -3,3 +3,4 @@ click
 python-dotenv
 tqdm
 lxml
+PyYAML

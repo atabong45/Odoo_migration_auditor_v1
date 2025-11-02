@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "odoo-auditor-cli"
+version = "0.1.0"
+authors = [
+  { name="Votre Nom", email="votre@email.com" },
+]
+description = "A CLI tool to audit Odoo migrations and estimate effort."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+# On liste ici les dépendances, cela remplace requirements.txt pour l'installation
+dependencies = [
+    "requests",
+    "click",
+    "python-dotenv",
+    "tqdm",
+    "lxml",
+    "PyYAML", 
+]
+
+[project.scripts]
+# C'est la ligne magique qui crée la commande en ligne
+odoo-auditor = "auditor.main:cli"

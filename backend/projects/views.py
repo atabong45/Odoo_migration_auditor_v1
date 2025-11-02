@@ -8,6 +8,7 @@ from rest_framework.exceptions import PermissionDenied
 from .models import Project, AnalysisRun
 from .serializers import ProjectSerializer, AnalysisRunDetailSerializer,  AnalysisRunCreateSerializer
 from .permissions import IsProjectOwner, IsAnalysisOwner, HasValidAPIKey
+from .scoring import calculate_effort_score
 
 class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
@@ -100,4 +101,15 @@ class AnalysisRunCreateView(generics.CreateAPIView):
         
         # On passe le projet en argument additionnel à la méthode save().
         # Le serializer l'ajoutera à validated_data avant d'appeler sa méthode create().
-        serializer.save(project=project)
+        analysis_run = serializer.save(project=project)
+        
+        # Maintenant que tout est en base de données, on peut calculer le score.
+        # On récupère toutes les issues qui viennent d'être créées.
+        issues = analysis_run.issues.all()
+        
+        # On appelle notre logique de scoring
+        score = calculate_effort_score(issues)
+        
+        # On met à jour l'objet AnalysisRun avec le score calculé et on le sauvegarde.
+        analysis_run.effort_score = score
+        analysis_run.save(update_fields=['effort_score'])

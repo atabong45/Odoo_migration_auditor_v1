@@ -1,0 +1,10 @@
+# Configuration pour l'auditeur Odoo
+# L'agent cherchera ce fichier dans le dossier où il est lancé.
+path: "."
+
+api_key: "3780a7f2-58c5-42e5-887a-8c74e383e645" # <-- METS TA CLÉ ICI
+
+# On peut aussi définir le chemin. Le '.' signifie "le répertoire courant".
+
+from_version: 16.0
+to_version: 17.0
